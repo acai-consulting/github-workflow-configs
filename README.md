@@ -1,4 +1,4 @@
-# @nuvibit/github-terraform-semantic-release-config
+# @acai-consulting/github-workflow-configs
 
 [**semantic-release**](https://github.com/semantic-release/semantic-release) shareable config to create release of Terraform Modules with [Github Actions](https://github.com/nuvibit/github-terraform-workflows).
 
@@ -15,7 +15,7 @@ This shareable configuration use the following plugins:
 ## Install
 
 ```bash
-$ npm install --save-dev semantic-release @nuvibit/github-terraform-semantic-release-config
+$ npm install --save-dev semantic-release @acai-consulting/github-workflow-configs
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ The shareable config can be configured in the [**semantic-release** configuratio
 
 ```json
 {
-  "extends": "@nuvibit/github-terraform-semantic-release-config"
+  "extends": "@acai-consulting/github-workflow-configs"
 }
 ```
 

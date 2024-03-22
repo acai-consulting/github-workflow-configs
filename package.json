@@ -1,10 +1,10 @@
 {
-  "name": "@nuvibit/github-terraform-semantic-release-config",
+  "name": "@acai-consulting/github-workflow-configs",
   "description": "semantic-release shareable config to create release of Terraform Modules.",
   "version": "1.1.7",
   "author": "@stefano-franco (https://github.com/stefano-franco)",
   "bugs": {
-    "url": "https://github.com/nuvibit/github-terraform-semantic-release-config/issues"
+    "url": "https://github.com/acai-consulting/github-workflow-configs/issues"
   },
   "contributors": [
     "@stefano-franco (https://github.com/stefano-franco)"
@@ -24,7 +24,7 @@
   "files": [
     "index.js"
   ],
-  "homepage": "https://github.com/nuvibit/github-terraform-semantic-release-config#readme",
+  "homepage": "https://github.com/acai-consulting/github-workflow-configs#readme",
   "keywords": [
     "terraform",
     "terraform-modules",
@@ -47,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nuvibit/github-terraform-semantic-release-config.git"
+    "url": "git+https://github.com/acai-consulting/github-workflow-configs.git"
   },
   "scripts": {
     "semantic-release": "semantic-release",
