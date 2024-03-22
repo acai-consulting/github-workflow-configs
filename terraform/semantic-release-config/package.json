@@ -1,30 +1,6 @@
 {
-  "name": "@nuvibit/github-terraform-semantic-release-config",
-  "description": "semantic-release shareable config to create release of Terraform Modules.",
-  "version": "1.1.7",
-  "author": "@stefano-franco (https://github.com/stefano-franco)",
-  "bugs": {
-    "url": "https://github.com/nuvibit/github-terraform-semantic-release-config/issues"
-  },
-  "contributors": [
-    "@stefano-franco (https://github.com/stefano-franco)"
-  ],
-  "dependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/git": "^10.0.1"
-  },
-  "devDependencies": {
-    "semantic-release": "^19.0.2",
-    "xo": "^0.48.0"
-  },
-  "engines": {
-    "node": ">=10.18"
-  },
-  "main": "index.js",
-  "files": [
-    "index.js"
-  ],
-  "homepage": "https://github.com/nuvibit/github-terraform-semantic-release-config#readme",
+  "name": "@acai-consulting/github-workflow-configs",
+  "version": "1.0.0",
   "keywords": [
     "terraform",
     "terraform-modules",
@@ -35,19 +11,17 @@
     "version"
   ],
   "license": "MIT",
-  "peerDependencies": {
-    "semantic-release": ">=16.0.0"
+  "dependencies": {
+    "@mejerrytech/terraform-semantic-release-config": "^1.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1"
   },
-  "prettier": {
-    "printWidth": 120,
-    "trailingComma": "es5"
+  "devDependencies": {
+    "semantic-release": "^19.0.2",
+    "xo": "^0.48.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nuvibit/github-terraform-semantic-release-config.git"
+  "engines": {
+    "node": ">=10.18"
   },
   "scripts": {
     "semantic-release": "semantic-release",
@@ -59,5 +33,11 @@
     "rules": {
       "unicorn/string-content": "off"
     }
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "[**semantic-release**](https://github.com/semantic-release/semantic-release) shareable config to create release of Terraform Modules with [Github Actions](https://github.com/nuvibit/github-terraform-workflows).",
+  "main": "index.js",
+  "author": ""
 }
