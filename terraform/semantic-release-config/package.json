@@ -1,0 +1,43 @@
+{
+  "name": "@acai-consulting/github-workflow-configs",
+  "version": "1.0.0",
+  "keywords": [
+    "terraform",
+    "terraform-modules",
+    "conventional-changelog",
+    "release",
+    "semantic-release",
+    "semantic-release-config",
+    "version"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@mejerrytech/terraform-semantic-release-config": "^1.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1"
+  },
+  "devDependencies": {
+    "semantic-release": "^19.0.2",
+    "xo": "^0.48.0"
+  },
+  "engines": {
+    "node": ">=10.18"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release",
+    "test": "xo"
+  },
+  "xo": {
+    "prettier": true,
+    "space": true,
+    "rules": {
+      "unicorn/string-content": "off"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "[**semantic-release**](https://github.com/semantic-release/semantic-release) shareable config to create release of Terraform Modules with [Github Actions](https://github.com/nuvibit/github-terraform-workflows).",
+  "main": "index.js",
+  "author": ""
+}
