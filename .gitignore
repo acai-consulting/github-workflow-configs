@@ -1,0 +1,24 @@
+# Logs
+npm-debug.log*
+
+# Cache files
+.cache
+*.cache
+
+# Dependency directories
+node_modules
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variables file
+.env
+
+# MacOS-specific files
+.DS_Store
+
+# NPM files
+.npmrc
+
+# local configuration
+.releaerc.yaml
