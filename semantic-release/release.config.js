@@ -2,22 +2,24 @@ module.exports = {
     branches: ["main"],
     tagFormat: "${version}",
     plugins: [
-        '@semantic-release/commit-analyzer', // This plugin has no additional configuration here, so it's just a string.
+        '@semantic-release/commit-analyzer',
         [
-            '@semantic-release/release-notes-generator', // This needs to be an array with its configuration object.
+            '@semantic-release/release-notes-generator',
             {
                 preset: 'conventionalcommits',
-            },
+            }
+        ],
+        [
             "@semantic-release/exec",
             {
-                "prepareCmd": "sed -i 's|\"tf_module_version\" = /\\*version_injection_start\\*/\".*\"/\\*version_injection_end\\*/|\"tf_module_version\" = /\\*version_injection_start\\*/\"${nextRelease.version}\"/\\*version_injection_end\\*/|' main.tf"
+                prepareCmd: "sed -i 's|\"tf_module_version\" = /\\*version_injection_start\\*/\".*\"/\\*version_injection_end\\*/|\"tf_module_version\" = /\\*version_injection_start\\*/\"${nextRelease.version}\"/\\*version_injection_end\\*/|' main.tf"
             }
         ],
         [
             '@semantic-release/github',
             {
-                successComment: 'This ${issue.pull_request ? \'PR is included\' : \'issue has been resolved\'} in version ${nextRelease.version} :tada:',
-                labels: false, // This and the next option expect boolean or array values. To disable them, `false` is correct.
+                successComment: "This ${issue.pull_request ? 'PR is included' : 'issue has been resolved'} in version ${nextRelease.version} :tada:",
+                labels: false,
                 releasedLabels: false
             }
         ],
@@ -31,9 +33,9 @@ module.exports = {
         [
             '@semantic-release/git',
             {
-                assets: ['CHANGELOG.md'],
+                assets: ['CHANGELOG.md', 'main.tf'], // Include main.tf to commit the updated version
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
-            },
+            }
         ],
     ]
 };
