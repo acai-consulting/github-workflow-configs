@@ -13,7 +13,9 @@ module.exports = {
             "@semantic-release/exec",
             {
                 prepareCmd: "sed -i 's|/\\*inject_version_start\\*/\".*\"/\\*inject_version_end\\*/|/\\*inject_version_start\\*/\"${nextRelease.version}\"/\\*inject_version_end\\*/|' main.tf"
-            },
+            }
+        ],
+        [
             "@semantic-release/exec",
             {
                 prepareCmd: "sed -i 's|INJECT_VERSION|${nextRelease.version}|g' README.md"
