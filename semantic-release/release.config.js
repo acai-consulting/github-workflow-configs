@@ -7,6 +7,10 @@ module.exports = {
             '@semantic-release/release-notes-generator', // This needs to be an array with its configuration object.
             {
                 preset: 'conventionalcommits',
+            },
+            "@semantic-release/exec",
+            {
+                "prepareCmd": "sed -i 's|\"tf_module_version\" = /\\*version_injection_start\\*/\".*\"/\\*version_injection_end\\*/|\"tf_module_version\" = /\\*version_injection_start\\*/\"${nextRelease.version}\"/\\*version_injection_end\\*/|' main.tf"
             }
         ],
         [
