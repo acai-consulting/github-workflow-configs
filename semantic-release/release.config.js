@@ -12,7 +12,7 @@ module.exports = {
         [
             "@semantic-release/exec",
             {
-                prepareCmd: "sed -i 's|\"tf_module_version\" = /\\*version_injection_start\\*/\".*\"/\\*version_injection_end\\*/|\"tf_module_version\" = /\\*version_injection_start\\*/\"${nextRelease.version}\"/\\*version_injection_end\\*/|' main.tf"
+                prepareCmd: "sed -i 's|\"tf_module_version\" = /\\*inject_version_start\\*/\".*\"/\\*inject_version_end\\*/|\"tf_module_version\" = /\\*inject_version_start\\*/\"${nextRelease.version}\"/\\*inject_version_end\\*/|' main.tf"
             }
         ],
         [
