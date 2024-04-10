@@ -22,6 +22,12 @@ module.exports = {
             }
         ],
         [
+            "@semantic-release/exec",
+            {
+                prepareCmd: "sed -i 's|\\(module_version-\\)[0-9]*\\.[0-9]*\\.[0-9]*|\\1${nextRelease.version}|' README.md"
+            }
+        ],
+        [
             '@semantic-release/github',
             {
                 successComment: "This ${issue.pull_request ? 'PR is included' : 'issue has been resolved'} in version ${nextRelease.version} :tada:",
