@@ -24,7 +24,7 @@ module.exports = {
         [
             "@semantic-release/exec",
             {
-                prepareCmd: "sed -i 's|\\(module_version-\\)[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+|\\1${nextRelease.version}|' README.md"
+                prepareCmd: "sed -i 's|module_version-[0-9]*\.[0-9]*\.[0-9]*|module_version-${nextRelease.version}|g' README.md"
             }            
         ],
         [
