@@ -12,7 +12,7 @@ module.exports = {
         [
             "@semantic-release/exec",
             {
-                prepareCmd: "sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1${nextRelease.version}\\2|' main.tf"
+                prepareCmd: "find . -type f -name 'main.tf' -exec sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1${nextRelease.version}\\2|' {} +"                
             }
         ],
         [
