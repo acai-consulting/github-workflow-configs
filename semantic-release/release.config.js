@@ -19,6 +19,12 @@ module.exports = {
         [
             "@semantic-release/exec",
             {
+                successCmd: "./release-commit-main-tf.sh ${nextRelease.version}"
+            }
+        ],
+        [
+            "@semantic-release/exec",
+            {
                 // This command updates the README.md with a simple version placeholder replacement
                 prepareCmd: "sed -i 's|INJECT_VERSION|${nextRelease.version}|g' README.md"
             }
@@ -52,14 +58,6 @@ module.exports = {
                 assets: ['CHANGELOG.md', 'README.md'], // Only include files directly handled here
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             }
-        ],
-        // Add an exec step to commit all main.tf files
-        [
-            "@semantic-release/exec",
-            {
-                // Using a shell command to add and commit all main.tf files that were updated
-                successCmd: "git add $(find . -type f -name 'main.tf') && git commit -m 'chore(release): update main.tf versions to ${nextRelease.version} [skip ci]' || true"
-            }
-        ],
+        ]
     ]
 };
