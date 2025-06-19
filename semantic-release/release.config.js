@@ -1,3 +1,13 @@
+const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
+    .split(',')
+    .map(p => p.trim())
+    .filter(Boolean);
+
+// erzeugt z. B. "-not -path \"./foo*\" -not -path \"./bar*\""
+const excludeFindArgs = folderPrefixes
+    .map(p => `-not -path "./${p}*"`)
+    .join(' ');
+
 module.exports = {
     branches: ["main"],
     tagFormat: "${version}",
@@ -5,29 +15,27 @@ module.exports = {
         '@semantic-release/commit-analyzer',
         [
             '@semantic-release/release-notes-generator',
-            {
-                preset: 'conventionalcommits',
-            }
+            { preset: 'conventionalcommits' }
         ],
         [
             "@semantic-release/exec",
             {
-                // This command updates all main.tf files with the new version
-                prepareCmd: "find . -type f -name 'main.tf' -exec sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1${nextRelease.version}\\2|' {} +"
+                // Alle main.tf aktualisieren, außer in Verzeichnissen mit angegebenem Präfix
+                prepareCmd: `find . -type f -name 'main.tf' ${excludeFindArgs} -exec sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1\\\${nextRelease.version}\\2|' {} +`
             }
         ],
         [
             "@semantic-release/exec",
             {
                 // This command updates the README.md with a simple version placeholder replacement
-                prepareCmd: "sed -i 's|INJECT_VERSION|${nextRelease.version}|g' README.md"
+                prepareCmd: `find . -type f -name 'README.md' ${excludeFindArgs} -exec sed -i 's|INJECT_VERSION|\${nextRelease.version}|g' {} +`
             }
         ],
         [
             "@semantic-release/exec",
             {
                 // This command updates the README.md with a more complex version placeholder replacement
-                prepareCmd: "sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-${nextRelease.version}|g' README.md"
+                prepareCmd: `find . -type f -name 'README.md' ${excludeFindArgs} -exec sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-\${nextRelease.version}|g' {} +`
             }
         ],
         [
