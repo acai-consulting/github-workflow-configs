@@ -30,21 +30,21 @@ module.exports = {
             '@semantic-release/exec',
             {
                 // Update main.tf files with version
-                prepareCmd: createFindCommand('main.tf', `sed -i 's|\\\\(/\\\\*inject_version_start\\\\*/ "\\\\).*\\\\(" /\\\\*inject_version_end\\\\*/\\\\)|\\\\1\${nextRelease.version}\\\\2|'`)
+                prepareCmd: createFindCommand('main.tf', `sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1${nextRelease.version}\\2|'`)
             }
         ],
         [
             '@semantic-release/exec',
             {
                 // Simple placeholder replacement in README.md
-                prepareCmd: createFindCommand('README.md', `sed -i 's|INJECT_VERSION|\${nextRelease.version}|g'`)
+                prepareCmd: createFindCommand('README.md', `sed -i 's|INJECT_VERSION|${nextRelease.version}|g'`)
             }
         ],
         [
             '@semantic-release/exec',
             {
                 // Complex version string replacement in README.md
-                prepareCmd: createFindCommand('README.md', `sed -i 's|module_version-[0-9]*\\\\.[0-9]*\\\\.[0-9]*|module_version-\${nextRelease.version}|g'`)
+                prepareCmd: createFindCommand('README.md', `s|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-${nextRelease.version}|g'`)
             }
         ],
         [
