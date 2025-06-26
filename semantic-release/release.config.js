@@ -4,9 +4,13 @@ const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
     .map(p => p.trim())
     .filter(Boolean);
 
+console.log('DEBUG: Parsed folder prefixes:', folderPrefixes);
+
 function createFindCommand(filePattern, sedCommand) {
     if (folderPrefixes.length === 0) {
-        return `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
+        const command = `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
+        console.log('DEBUG: Generated find command (no exclusions):', command);
+        return command;
     }
     
     // Use -prune for efficient exclusions with proper recursion
@@ -14,7 +18,9 @@ function createFindCommand(filePattern, sedCommand) {
         .map(prefix => `-path './${prefix}*' -prune`)
         .join(' -o ');
 
-    return `find . \\( ${excludeArgs} \\) -o \\( -type f -name '${filePattern}' -exec ${sedCommand} {} + \\)`;
+    const command = `find . \\( ${excludeArgs} \\) -o \\( -type f -name '${filePattern}' -exec ${sedCommand} {} + \\)`;
+    console.log('DEBUG: Generated find command (with exclusions):', command);
+    return command;
 }
 
 module.exports = {
@@ -44,7 +50,7 @@ module.exports = {
             '@semantic-release/exec',
             {
                 // Complex version string replacement in README.md
-                prepareCmd: createFindCommand('README.md', `s|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-\${nextRelease.version}|g'`)
+                prepareCmd: createFindCommand('README.md', `sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-\${nextRelease.version}|g'`)
             }
         ],
         [
