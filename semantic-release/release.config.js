@@ -9,12 +9,12 @@ function createFindCommand(filePattern, sedCommand) {
         return `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
     }
     
-    // Use -prune for efficient exclusions
+    // Escape parentheses and use -prune for exclusions
     const excludeArgs = folderPrefixes
         .map(prefix => `\\( -path './${prefix}*' -prune \\)`)
         .join(' -o ');
 
-    return `find . ${excludeArgs} -o \\( -type f -name '${filePattern}' -exec ${sedCommand} {} + \\)`;
+    return `find . \\( ${excludeArgs} \\) -o -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
 }
 
 module.exports = {
