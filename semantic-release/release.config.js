@@ -6,7 +6,6 @@ const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
 
 console.log('DEBUG: Parsed folder prefixes:', folderPrefixes);
 
-
 function createFindCommand(filePattern, sedCommand) {
     if (folderPrefixes.length === 0) {
         return `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
@@ -33,7 +32,7 @@ module.exports = {
             '@semantic-release/exec',
             {
                 // Update main.tf files with version
-                prepareCmd: createFindCommand('main.tf', `sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1\${nextRelease.version}\\2|'`)
+                prepareCmd: createFindCommand('main.tf', `sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" \\*inject_version_end\\*/\\)|\\1\${nextRelease.version}\\2|'`)
             }
         ],
         [
