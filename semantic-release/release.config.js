@@ -21,7 +21,7 @@ module.exports = {
             "@semantic-release/exec",
             {
                 // Alle main.tf aktualisieren, außer in Verzeichnissen mit angegebenem Präfix
-                prepareCmd: `find . -type f -name 'main.tf' ${excludeFindArgs} -exec sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1\\\${nextRelease.version}\\2|' {} +`
+                prepareCmd: `find . -type f -name 'main.tf' ${excludeFindArgs} -exec sed -i 's|\\(/\\*inject_version_start\\*/ \\\"\\).*\\(\\\" \\/*inject_version_end\\*/\\)|\\1${nextRelease.version}\\2|' {} +`
             }
         ],
         [
