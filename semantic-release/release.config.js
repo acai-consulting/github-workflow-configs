@@ -24,21 +24,21 @@ module.exports = {
             "@semantic-release/exec",
             {
                 // Update main.tf files with version, skipping excluded folders
-                prepareCmd: `find . -type f -name 'main.tf' ${excludeFindArgs} -exec sed -i 's|\\(/\\*inject_version_start\\*/ \\\"\\).*\\(\\\" \\/*inject_version_end\\*/\\)|\\1$SEMANTIC_RELEASE_NEXT_RELEASE_VERSION\\2|' {} +`
+                prepareCmd: "find . -type f -name 'main.tf' ${excludeFindArgs} -exec sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1${nextRelease.version}\\2|' {} +"
             }
         ],
         [
             "@semantic-release/exec",
             {
                 // Simple placeholder replacement in README.md
-                prepareCmd: `find . -type f -name 'README.md' ${excludeFindArgs} -exec sed -i 's|INJECT_VERSION|$SEMANTIC_RELEASE_NEXT_RELEASE_VERSION|g' {} +`
+                prepareCmd: "find . -type f -name 'README.md' ${excludeFindArgs} -exec sed -i 's|INJECT_VERSION|${nextRelease.version}|g' {} +"
             }
         ],
         [
             "@semantic-release/exec",
             {
                 // Complex version string replacement in README.md
-                prepareCmd: `find . -type f -name 'README.md' ${excludeFindArgs} -exec sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-$SEMANTIC_RELEASE_NEXT_RELEASE_VERSION|g' {} +`
+                prepareCmd: "find . -type f -name 'README.md' ${excludeFindArgs} -exec sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-${nextRelease.version}|g' {} +"
             }
         ],
         [
