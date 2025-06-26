@@ -22,9 +22,9 @@ module.exports = {
             {
                 // Update all files with version injection, skipping excluded folders
                 prepareCmd: [
-                    `find . ${excludeFindArgs} -type f -name 'main.tf' -exec sed -i 's|\\(/\\*inject_version_start\\*/ "\\).*\\(" /\\*inject_version_end\\*/\\)|\\1\${nextRelease.version}\\2|' {} + || true`,
-                    `find . ${excludeFindArgs} -type f -name 'README.md' -exec sed -i 's|INJECT_VERSION|\${nextRelease.version}|g' {} + || true`,
-                    `find . ${excludeFindArgs} -type f -name 'README.md' -exec sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-\${nextRelease.version}|g' {} + || true`
+                    `find . \\( ${excludeFindArgs} \\) -type f -name 'main.tf' -exec sed -i 's|\\(/\\*inject_version_start\\*/ "\\).*\\(" /\\*inject_version_end\\*/\\)|\\1\${nextRelease.version}\\2|' {} + || true`,
+                    `find . \\( ${excludeFindArgs} \\) -type f -name 'README.md' -exec sed -i 's|INJECT_VERSION|\${nextRelease.version}|g' {} + || true`,
+                    `find . \\( ${excludeFindArgs} \\) -type f -name 'README.md' -exec sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-\${nextRelease.version}|g' {} + || true`
                 ].join(' && ')
             }
         ],
