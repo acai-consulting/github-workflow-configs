@@ -6,11 +6,10 @@ const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
 
 console.log('DEBUG: Parsed folder prefixes:', folderPrefixes);
 
+
 function createFindCommand(filePattern, sedCommand) {
     if (folderPrefixes.length === 0) {
-        const command = `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
-        console.log('DEBUG: Generated find command (no exclusions):', command);
-        return command;
+        return `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
     }
     
     // Use -prune for efficient exclusions with proper recursion
@@ -18,9 +17,7 @@ function createFindCommand(filePattern, sedCommand) {
         .map(prefix => `-path './${prefix}*' -prune`)
         .join(' -o ');
 
-    const command = `find . \\( ${excludeArgs} \\) -o \\( -type f -name '${filePattern}' -exec ${sedCommand} {} + \\)`;
-    console.log('DEBUG: Generated find command (with exclusions):', command);
-    return command;
+    return `find . \\( ${excludeArgs} \\) -o \\( -type f -name '${filePattern}' -exec ${sedCommand} {} + \\)`;
 }
 
 module.exports = {
