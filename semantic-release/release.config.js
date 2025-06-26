@@ -1,14 +1,20 @@
+// Parse folder prefixes from environment variable
+const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
+    .split(',')
+    .map(p => p.trim())
+    .filter(Boolean);
+
 function createFindCommand(filePattern, sedCommand) {
     if (folderPrefixes.length === 0) {
         return `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
     }
     
-    // Use escaped parentheses to avoid syntax errors
+    // Use -not -path to avoid parentheses syntax issues
     const excludeArgs = folderPrefixes
-        .map(prefix => `\\( -path './${prefix}*' -prune \\)`)
-        .join(' -o ');
+        .map(prefix => `-not -path './${prefix}*'`)
+        .join(' ');
 
-    return `find . ${excludeArgs} -o -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
+    return `find . ${excludeArgs} -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
 }
 
 module.exports = {
@@ -23,7 +29,7 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                // Update main.tf files with version (no exclusions for testing)
+                // Update main.tf files with version
                 prepareCmd: createFindCommand('main.tf', `sed -i 's|\\\\(/\\\\*inject_version_start\\\\*/ "\\\\).*\\\\(" /\\\\*inject_version_end\\\\*/\\\\)|\\\\1\${nextRelease.version}\\\\2|'`)
             }
         ],
