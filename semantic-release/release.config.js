@@ -6,8 +6,8 @@ const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
 // e.g. for ["99-","foo"], this becomes:
 //   ( -path './99-*' -o -path './foo*' ) -prune -o
 const pruneExpr = folderPrefixes.length
-    ? `( ${folderPrefixes.map(p => `-path './${p}*'`).join(' -o ')} ) -prune -o`
-    : '';
+  ? `\\( ${folderPrefixes.map(p => `-path './${p}*'`).join(' -o ')} \\) -prune -o`
+  : '';
 
 module.exports = {
     branches: ['main'],
