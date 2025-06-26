@@ -1,20 +1,14 @@
-const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
-    .split(',')
-    .map(p => p.trim())
-    .filter(Boolean);
-
-// Function to create find command with proper exclusions
 function createFindCommand(filePattern, sedCommand) {
     if (folderPrefixes.length === 0) {
         return `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
     }
     
-    // Use -not -path instead of ( ) -prune to avoid parentheses issues
+    // Use escaped parentheses to avoid syntax errors
     const excludeArgs = folderPrefixes
-        .map(prefix => `-not -path './${prefix}*'`)
-        .join(' ');
-    
-    return `find . ${excludeArgs} -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
+        .map(prefix => `\\( -path './${prefix}*' -prune \\)`)
+        .join(' -o ');
+
+    return `find . ${excludeArgs} -o -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
 }
 
 module.exports = {
@@ -29,31 +23,22 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                // Update main.tf files with version, skipping excluded folders
-                prepareCmd: createFindCommand(
-                    'main.tf',
-                    `sed -i 's|\\\\(/\\\\*inject_version_start\\\\*/ "\\\\).*\\\\(" /\\\\*inject_version_end\\\\*/\\\\)|\\\\1\${nextRelease.version}\\\\2|'`
-                )
+                // Update main.tf files with version (no exclusions for testing)
+                prepareCmd: createFindCommand('main.tf', `sed -i 's|\\\\(/\\\\*inject_version_start\\\\*/ "\\\\).*\\\\(" /\\\\*inject_version_end\\\\*/\\\\)|\\\\1\${nextRelease.version}\\\\2|'`)
             }
         ],
         [
             '@semantic-release/exec',
             {
                 // Simple placeholder replacement in README.md
-                prepareCmd: createFindCommand(
-                    'README.md',
-                    `sed -i 's|INJECT_VERSION|\${nextRelease.version}|g'`
-                )
+                prepareCmd: createFindCommand('README.md', `sed -i 's|INJECT_VERSION|\${nextRelease.version}|g'`)
             }
         ],
         [
             '@semantic-release/exec',
             {
                 // Complex version string replacement in README.md
-                prepareCmd: createFindCommand(
-                    'README.md',
-                    `sed -i 's|module_version-[0-9]*\\\\.[0-9]*\\\\.[0-9]*|module_version-\${nextRelease.version}|g'`
-                )
+                prepareCmd: createFindCommand('README.md', `sed -i 's|module_version-[0-9]*\\\\.[0-9]*\\\\.[0-9]*|module_version-\${nextRelease.version}|g'`)
             }
         ],
         [
