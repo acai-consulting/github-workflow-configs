@@ -32,7 +32,7 @@ module.exports = {
             '@semantic-release/exec',
             {
                 // Update main.tf files with version
-                prepareCmd: createFindCommand('main.tf', `sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" \\*inject_version_end\\*/\\)|\\1\${nextRelease.version}\\2|'`)
+                prepareCmd: createFindCommand('main.tf', `sed -i 's|\\(/\\*inject_version_start\\*/ \"\\).*\\(\" /\\*inject_version_end\\*/\\)|\\1\${nextRelease.version}\\2|'`)
             }
         ],
         [
