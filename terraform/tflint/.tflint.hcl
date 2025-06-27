@@ -1,11 +1,12 @@
-# config {
-#   module = true # Inspect module calls
-# }
+config {
+  module = true # Inspect module calls
+}
 
 # Enable TFLint ruleset plugin for aws (200+ rules)
+# https://github.com/terraform-linters/tflint-ruleset-aws
 plugin "aws" {
     enabled = true
-    version = "0.30.0"
+    version = "0.40.0"
     source  = "github.com/terraform-linters/tflint-ruleset-aws"
 }
 
