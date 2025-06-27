@@ -1,5 +1,5 @@
 config {
-  module = true # Inspect module calls
+  call_module_type = "all"
 }
 
 # Enable TFLint ruleset plugin for aws (200+ rules)
